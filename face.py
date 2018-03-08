@@ -1,11 +1,12 @@
 import numpy as np
-from scipy.stats import mode
+import scipy
+
 import cv2
 import os
 import csv
 import time
 
-path = 'C:/Users/Admin2/Documents/RASTREIA/faces'
+path = 'C:/projetos/visao/face'
 os.chdir(path)
 
 #Salva o arquivo com titulo atualizado por data e hora
@@ -24,10 +25,10 @@ for file in os.listdir(path):
 for file in file_list:
     #Para cada arquivo na lista faça:
     #Estabelece os classificadores de face
-    face_cascade = cv2.CascadeClassifier('C:/Users/Admin2/OpenCV3/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml')
-    face_alt_cascade = cv2.CascadeClassifier('C:/Users/Admin2/OpenCV3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml')
-    face_alt2_cascade = cv2.CascadeClassifier('C:/Users/Admin2/OpenCV3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt2.xml')
-    face_alt_tree_cascade = cv2.CascadeClassifier('C:/Users/Admin2/OpenCV3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt_tree.xml')
+    face_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml')
+    face_alt_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml')
+    face_alt2_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt2.xml')
+    face_alt_tree_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt_tree.xml')
     
     #Lê a imagem e converte para escala de cinza
     img = cv2.imread(file)
@@ -52,9 +53,9 @@ for file in file_list:
         print("Para a imagem "+file+", foram encontradas {0} faces!".format(len(classifier)))
         
         #Exibe as imagens com retãngulos. Para exibir, descomente as três linhas abaixo
-        #cv2.imshow('img',img)
-        #cv2.waitKey(0)
-        #cv2.destroyAllWindows()
+        cv2.imshow('img',img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
     
     # Exibe a média, variância e moda de cada classificador
     encontrados = []
@@ -66,14 +67,14 @@ for file in file_list:
     encontrados = np.asarray(encontrados, dtype = np.float16)
     media = np.mean(encontrados)
     variancia = np.var(encontrados)
-    moda = float(mode(encontrados)[0])
+    
     
     if file == file_list[0]:
         export.writerow(["imagem","media","variancia","moda"])
-        export.writerow([file, media, variancia, moda])
+        export.writerow([file, media, variancia])
     else:
-        export.writerow([file, media, variancia, moda])
+        export.writerow([file, media, variancia])
 
 saida.close()
 
-print ("Cabô, manolo!")
+print ("fim")
