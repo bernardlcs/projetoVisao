@@ -23,24 +23,24 @@ for file in os.listdir(path):
 
 
 for file in file_list:
-    #Para cada arquivo na lista faça:
+    #Para cada arquivo na lista
     #Estabelece os classificadores de face
     face_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml')
     face_alt_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt.xml')
     face_alt2_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt2.xml')
     face_alt_tree_cascade = cv2.CascadeClassifier('C:/opne3/opencv/sources/data/haarcascades/haarcascade_frontalface_alt_tree.xml')
     
-    #Lê a imagem e converte para escala de cinza
+    #ler a imagem e converte para escala de cinza
     img = cv2.imread(file)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
-    #Faz as classificações
+    #Faz as classificacoes
     faces = face_cascade.detectMultiScale(gray, 1.1, 5, minSize=(30,30))
     faces2 = face_alt_cascade.detectMultiScale(gray, 1.1, 5, minSize=(30,30))
     faces3 = face_alt2_cascade.detectMultiScale(gray, 1.1, 5, minSize=(30,30))
     faces4 = face_alt_tree_cascade.detectMultiScale(gray, 1.1, 5, minSize=(30,30))
     
-    #Organiza numa as classificações numa lista para loop
+    #Organiza numa as classificacoes numa lista para loop
     classifiers = [faces, faces2, faces3, faces4]
     
     # Coloca os quadrados nas faces
@@ -52,12 +52,12 @@ for file in file_list:
         
         print("Para a imagem "+file+", foram encontradas {0} faces!".format(len(classifier)))
         
-        #Exibe as imagens com retãngulos. Para exibir, descomente as três linhas abaixo
+        #Exibe as imagens com retangulos
         cv2.imshow('img',img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
     
-    # Exibe a média, variância e moda de cada classificador
+    # Exibe a media, variancia e moda de cada classificador
     encontrados = []
     
     for (classifier) in classifiers:
@@ -70,7 +70,7 @@ for file in file_list:
     
     
     if file == file_list[0]:
-        export.writerow(["imagem","media","variancia","moda"])
+        export.writerow(["imagem","media","variancia"])
         export.writerow([file, media, variancia])
     else:
         export.writerow([file, media, variancia])
